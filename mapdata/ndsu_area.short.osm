@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.5.5 (13739 thorn-02.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="46.8903000" minlon="-96.8090000" maxlat="46.9051000" maxlon="-96.7932000"/>
+ <node id="2334841569" visible="true" version="2" changeset="36168096" timestamp="2015-12-25T23:50:58Z" user="beweta" uid="152074" lat="46.9083165" lon="-96.8032503"/>
+ <node id="2334841592" visible="true" version="2" changeset="36168096" timestamp="2015-12-25T23:50:58Z" user="beweta" uid="152074" lat="46.9168333" lon="-96.8079638"/>
+ <node id="2334841597" visible="true" version="2" changeset="36168096" timestamp="2015-12-25T23:50:58Z" user="beweta" uid="152074" lat="46.9170929" lon="-96.8073778"/>
+ <node id="2334841603" visible="true" version="2" changeset="36168096" timestamp="2015-12-25T23:50:58Z" user="beweta" uid="152074" lat="46.9171428" lon="-96.8071884"/>
+ <node id="3915495860" visible="true" version="1" changeset="36231673" timestamp="2015-12-28T23:43:21Z" user="Natfoot" uid="567792" lat="46.8831042" lon="-96.7981827"/>
+ <way id="9626867" visible="true" version="5" changeset="35130099" timestamp="2015-11-06T16:35:17Z" user="AndrewBuck" uid="214969">
+  <nd ref="75137264"/>
+  <nd ref="3821079336"/>
+  <nd ref="75137265"/>
+  <nd ref="1120156032"/>
+  <nd ref="989841151"/>
+  <nd ref="989840558"/>
+  <nd ref="3821079341"/>
+  <nd ref="989840433"/>
+  <nd ref="75137266"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="yes"/>
+ </way>
+ <way id="9626878" visible="true" version="4" changeset="10052853" timestamp="2011-12-06T19:45:26Z" user="AndrewBuck" uid="214969">
+  <nd ref="75137306"/>
+  <nd ref="1124302885"/>
+  <nd ref="75137308"/>
+  <nd ref="1534427365"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482614"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9626889" visible="true" version="3" changeset="7099674" timestamp="2011-01-27T01:21:31Z" user="AndrewBuck" uid="214969">
+  <nd ref="75137372"/>
+  <nd ref="1122834322"/>
+  <nd ref="75137373"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482616"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9629137" visible="true" version="3" changeset="6345698" timestamp="2010-11-11T18:31:43Z" user="AndrewBuck" uid="214969">
+  <nd ref="75159673"/>
+  <nd ref="985873015"/>
+  <nd ref="985872945"/>
+  <nd ref="985872633"/>
+  <nd ref="985872830"/>
+  <nd ref="985872583"/>
+  <nd ref="985872916"/>
+  <nd ref="985872842"/>
+  <nd ref="985872790"/>
+  <nd ref="985873029"/>
+  <nd ref="75159674"/>
+  <nd ref="75159676"/>
+  <nd ref="75159679"/>
+  <nd ref="75159680"/>
+  <nd ref="75159681"/>
+  <nd ref="75159682"/>
+  <nd ref="75159683"/>
+  <nd ref="75159684"/>
+  <nd ref="985872865"/>
+  <nd ref="985872907"/>
+  <nd ref="985872569"/>
+  <nd ref="985873000"/>
+  <nd ref="75159685"/>
+  <nd ref="75159686"/>
+  <nd ref="75159692"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482623"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9629796" visible="true" version="1" changeset="200650" timestamp="2007-10-16T12:07:13Z" user="DaveHansenTiger" uid="7168">
+  <nd ref="75167994"/>
+  <nd ref="75167996"/>
+  <nd ref="75167998"/>
+  <nd ref="75167999"/>
+  <nd ref="75168000"/>
+  <nd ref="75168002"/>
+  <nd ref="75168003"/>
+  <nd ref="75168004"/>
+  <nd ref="75168005"/>
+  <nd ref="75168007"/>
+  <nd ref="75167994"/>
+  <tag k="highway" v="residential"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151485762"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9630124" visible="true" version="2" changeset="13403477" timestamp="2012-10-07T19:31:49Z" user="AndrewBuck" uid="214969">
+  <nd ref="75166623"/>
+  <nd ref="1951366169"/>
+  <nd ref="1951366178"/>
+  <nd ref="75172112"/>
+  <tag k="highway" v="residential"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+ </way>
+ <way id="9630127" visible="true" version="3" changeset="10051649" timestamp="2011-12-06T17:24:19Z" user="AndrewBuck" uid="214969">
+  <nd ref="75172155"/>
+  <nd ref="75172158"/>
+  <nd ref="75172159"/>
+  <nd ref="75172160"/>
+  <nd ref="75172161"/>
+  <nd ref="75172162"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482672"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9630620" visible="true" version="4" changeset="10078140" timestamp="2011-12-10T02:59:52Z" user="AndrewBuck" uid="214969">
+  <nd ref="75177990"/>
+  <nd ref="1534305855"/>
+  <nd ref="75177991"/>
+  <nd ref="75177992"/>
+  <nd ref="75177993"/>
+  <nd ref="75177995"/>
+  <nd ref="1538977641"/>
+  <nd ref="1538977638"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482631"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9632609" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:07Z" user="AndrewBuck" uid="214969">
+  <nd ref="75194583"/>
+  <nd ref="75194584"/>
+  <nd ref="75194586"/>
+  <nd ref="75194587"/>
+  <nd ref="75194589"/>
+  <nd ref="75194590"/>
+  <nd ref="75194591"/>
+  <nd ref="75194594"/>
+  <nd ref="75194595"/>
+  <nd ref="75194596"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482646"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9632613" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:07Z" user="AndrewBuck" uid="214969">
+  <nd ref="75194628"/>
+  <nd ref="75194631"/>
+  <nd ref="75194632"/>
+  <nd ref="75194633"/>
+  <nd ref="75194634"/>
+  <nd ref="75194635"/>
+  <nd ref="75194637"/>
+  <nd ref="75194638"/>
+  <nd ref="75194640"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482647"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9636446" visible="true" version="4" changeset="10051649" timestamp="2011-12-06T17:24:18Z" user="AndrewBuck" uid="214969">
+  <nd ref="75140266"/>
+  <nd ref="985962505"/>
+  <nd ref="1534305083"/>
+  <nd ref="75185621"/>
+  <nd ref="75185701"/>
+  <nd ref="985963086"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151447149:151447150:151447151:151447184:151459713:151473443:151473445:151473446:151473703:151473704"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9626876" visible="true" version="7" changeset="13403477" timestamp="2012-10-07T19:31:50Z" user="AndrewBuck" uid="214969">
+  <nd ref="75137286"/>
+  <nd ref="1124302539"/>
+  <nd ref="987767770"/>
+  <nd ref="987767279"/>
+  <nd ref="987767163"/>
+  <nd ref="75137288"/>
+  <tag k="highway" v="service"/>
+  <tag k="service" v="parking_aisle"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="yes"/>
+ </way>
+ <way id="9625599" visible="true" version="3" changeset="7087234" timestamp="2011-01-25T19:53:09Z" user="AndrewBuck" uid="214969">
+  <nd ref="75130128"/>
+  <nd ref="75130131"/>
+  <nd ref="75130133"/>
+  <nd ref="75130134"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="yes"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151483755:151482621"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9626892" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:36Z" user="AndrewBuck" uid="214969">
+  <nd ref="75137382"/>
+  <nd ref="75137383"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482617"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9629138" visible="true" version="3" changeset="22394038" timestamp="2014-05-17T18:32:27Z" user="AndrewBuck" uid="214969">
+  <nd ref="75159696"/>
+  <nd ref="75159697"/>
+  <tag k="highway" v="service"/>
+  <tag k="surface" v="asphalt"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+ </way>
+ <way id="9629794" visible="true" version="5" changeset="10443645" timestamp="2012-01-20T07:17:39Z" user="dandc87" uid="587960">
+  <nd ref="75167953"/>
+  <nd ref="1598551421"/>
+  <nd ref="75167954"/>
+  <nd ref="75167956"/>
+  <nd ref="75167958"/>
+  <nd ref="75167962"/>
+  <nd ref="1122834524"/>
+  <nd ref="75167963"/>
+  <nd ref="1598551422"/>
+  <nd ref="75167971"/>
+  <nd ref="75167953"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151485761"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9630635" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:21Z" user="AndrewBuck" uid="214969">
+  <nd ref="75178150"/>
+  <nd ref="75178151"/>
+  <nd ref="75178152"/>
+  <nd ref="75178153"/>
+  <nd ref="75178155"/>
+  <nd ref="75178158"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482638"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9630626" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:31Z" user="AndrewBuck" uid="214969">
+  <nd ref="75178041"/>
+  <nd ref="75178043"/>
+  <nd ref="75178045"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482634:151482641"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9630630" visible="true" version="2" changeset="3764810" timestamp="2010-02-01T02:17:32Z" user="AndrewBuck" uid="214969">
+  <nd ref="75178109"/>
+  <nd ref="75178110"/>
+  <nd ref="75178111"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482636:151482643"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9625597" visible="true" version="3" changeset="7087234" timestamp="2011-01-25T19:53:14Z" user="AndrewBuck" uid="214969">
+  <nd ref="75130112"/>
+  <nd ref="75130117"/>
+  <nd ref="75130119"/>
+  <nd ref="75130122"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="yes"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151483754:151482618"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9625536" visible="true" version="4" changeset="6344555" timestamp="2010-11-11T15:55:20Z" user="AndrewBuck" uid="214969">
+  <nd ref="75129190"/>
+  <nd ref="985576824"/>
+  <nd ref="985576894"/>
+  <nd ref="985577042"/>
+  <nd ref="985577107"/>
+  <nd ref="985576550"/>
+  <nd ref="985576800"/>
+  <nd ref="75129196"/>
+  <nd ref="75129197"/>
+  <nd ref="985577091"/>
+  <nd ref="985576907"/>
+  <nd ref="985576307"/>
+  <nd ref="985576256"/>
+  <nd ref="985576249"/>
+  <nd ref="985576182"/>
+  <nd ref="75129206"/>
+  <tag k="highway" v="service"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482651"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <way id="9625541" visible="true" version="4" changeset="6374456" timestamp="2010-11-15T00:53:27Z" user="AndrewBuck" uid="214969">
+  <nd ref="75129277"/>
+  <nd ref="989547572"/>
+  <nd ref="989547482"/>
+  <nd ref="75129279"/>
+  <nd ref="989547752"/>
+  <nd ref="75129281"/>
+  <tag k="highway" v="service"/>
+  <tag k="service" v="parking_aisle"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Cass, ND"/>
+  <tag k="tiger:reviewed" v="yes"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070829"/>
+  <tag k="tiger:tlid" v="151482653"/>
+  <tag k="tiger:upload_uuid" v="bulk_upload.pl-5faa75a6-2a91-4abe-a943-e675632e1848"/>
+ </way>
+ <relation id="1268107" visible="true" version="3" changeset="11493375" timestamp="2012-05-03T22:16:03Z" user="AndrewBuck" uid="214969">
+  <member type="way" ref="84834888" role="inner"/>
+  <member type="way" ref="84834917" role="outer"/>
+  <tag k="building" v="university"/>
+  <tag k="building:levels" v="3"/>
+  <tag k="name" v="Walster Hall"/>
+  <tag k="type" v="multipolygon"/>
+ </relation>
+</osm>
