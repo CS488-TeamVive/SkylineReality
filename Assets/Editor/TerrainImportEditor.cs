@@ -138,7 +138,8 @@ public class TerrainSceneCreator : EditorWindow {
         terrain.transform.name = path.Substring(path.LastIndexOf("/") + 1);
 
         CoordinateTranslation coord = terrain.gameObject.AddComponent<CoordinateTranslation>();
-        coord.SetCenter((int)config["xllcorner"], (int)config["yllcorner"], "Unknown");
+        coord.SetCenter((int)config["yllcorner"], (int)config["xllcorner"], "Unknown");
+        coord.MetersPerPixel = config["cellsize"];
         coord.MinHeightActual = (int)minHeightActual;
         coord.HeightScale = heightScale;
 

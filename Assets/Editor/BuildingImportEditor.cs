@@ -201,9 +201,9 @@ public class BuildingImportEditor : MonoBehaviour {
         Terrain[] terrains = GameObject.FindObjectsOfType<Terrain>();
         Terrain activeTerrain = null;
         CoordinateTranslation activeTranslation = null;
-        GameObject container = new GameObject();
+        //GameObject container = new GameObject();
 
-        container.name = "BuildingContainer";
+        //container.name = "BuildingContainer";
 
         int buildingsOOB = 0;
 
@@ -233,14 +233,9 @@ public class BuildingImportEditor : MonoBehaviour {
             if (activeTerrain == null || activeTranslation == null)
             {
                 buildingsOOB++;
-                //debug continue;
+                continue;
             }
 
-            /*
-            print(string.Format("Reference count for {0}: {1}", mf.name, mf.ndreferences.Count));
-            foreach (long l in mf.ndreferences)
-                print(string.Format("reference: {0}  => {1}, {2}", l, ndLookup[l][0], ndLookup[l][1]));
-                */
 
             Vector2[] relativeNodes = new Vector2[mf.NodeCount()];
             int c = 0;
@@ -251,19 +246,19 @@ public class BuildingImportEditor : MonoBehaviour {
 
                 CoordinateTranslation.LatLongtoUTM(ndLookup[l][0], ndLookup[l][1], out northing, out easting, out zone);
 
-                //relativeNodes[c++] = activeTranslation.RelativePosition((int)northing, (int)easting);
                 relativeNodes[c++] = new Vector2((float)(northing - firstNorthing), (float)(easting - firstEasting));
-                //relativeNodes[c++] = new Vector2(Mathf.Sin((float)(c) / mf.NodeCount() * Mathf.PI * 2)*3, Mathf.Cos((float)(c) / mf.NodeCount() * Mathf.PI * 2) * 3);
             }
+            GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            building.name = mf.name;
+            building.transform.parent = activeTerrain.transform;
 
             Mesh mesh = CreateMesh(relativeNodes, mf.height * 3.048f);
-            //Mesh mesh = new Mesh();
-
-            GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
             building.GetComponent<MeshFilter>().mesh = mesh;
 
-            building.transform.parent = container.transform;
+            Vector2 relative = activeTranslation.RelativePosition((int)firstNorthing, (int)firstEasting);
+
+            building.transform.position = new Vector3(relative.x, 0, relative.y);
+
         }
 
         EditorUtility.DisplayDialog("Finished importing from OSM", "Importing was completed with " + (mapFeatures.Count - buildingsOOB) + "/" + mapFeatures.Count + " in bounds", "Okay");
@@ -275,6 +270,7 @@ public class BuildingImportEditor : MonoBehaviour {
         //Create a new mesh
         Mesh mesh = new Mesh();
 
+        // generate a new array of vertices that includes the footprint vertices and ceiling vertices
         Vector3[] vertices = new Vector3[footprint.Length * 2];
         for(int h = 0; h < 2; h++)
         {
@@ -282,34 +278,96 @@ public class BuildingImportEditor : MonoBehaviour {
                 vertices[i + h * footprint.Length] = new Vector3(footprint[i].x, h * height, footprint[i].y);
         }
 
+        // get a triangulator object; it will triangulate the floors
         Triangulator tr = new Triangulator(footprint);
         int[] baseTris = tr.Triangulate();
 
-        int[] allTris = new int[baseTris.Length * 2 + footprint.Length * 2 * 3];
+        // create a new array to hold floor triangles, ceiling triangles, and wall triangles
+        // baseTris.Length * (1 floor + 1 ceiling) * (1 inside + 1 outside) +
+        //     footprint.Length * (2 triangles per rectangle wall) * (3 points per triangle) * (1 inside + 1 outside)
+        int[] allTris = new int[baseTris.Length * 2 * 2 + footprint.Length * 2 * 3 * 2];
 
 
+        int f1, f2, f3, c1, c2, c3;
+        int fi1, ci1, fi2, ci2;
         // copy baseTris for footprint, make triangles for top of building too
-        for (int i = 0; i < baseTris.Length; i++)
+        for (int i = 0; i < baseTris.Length; i = i + 3)
         {
-            allTris[i] = baseTris[i];
-            //allTris[baseTris.Length * 2 - 1 - i] = baseTris[i] + footprint.Length;
+            // triangle 'pointers'
+            f1 = baseTris[i];
+            f2 = baseTris[i + 1];
+            f3 = baseTris[i + 2];
+            c1 = baseTris[i] + footprint.Length;
+            c2 = baseTris[i + 1] + footprint.Length;
+            c3 = baseTris[i + 2] + footprint.Length;
+
+            // indices
+            fi1 = i;
+            ci1 = baseTris.Length * 1+ i;
+            fi2 = baseTris.Length * 2 + i;
+            ci2 = baseTris.Length * 3 + i;
+
+            // forward copying
+            // floor
+            allTris[fi1] = f1;
+            allTris[fi1 + 1] = f2;
+            allTris[fi1 + 2] = f3;
+
+            // ceiling
+            allTris[ci1] = c1;
+            allTris[ci1 + 1] = c2;
+            allTris[ci1 + 2] = c3;
+            // \
+
+            // reverse copying
+            // floor
+            allTris[fi2] = f3;
+            allTris[fi2 + 1] = f2;
+            allTris[fi2 + 2] = f1;
+
+            // ceiling
+            allTris[ci2] = c3;
+            allTris[ci2 + 1] = c2;
+            allTris[ci2 + 2] = c1;
+            // \
         }
 
-        /*
+
         // create sides of building
-        int mult;
+        int w1, w2, w3, w4;
+        int walli1, walli2;
         for (int i = 0; i < footprint.Length; i++)
         {
-            mult = baseTris.Length * 2 + i * 6; 
+            // w3 _ w4
+            // |  x  |
+            // w1 _ w2
+
+            // pointers
+            w1 = i;
+            w2 = (i + 1) % footprint.Length;
+            w3 = w1 + footprint.Length;
+            w4 = w2 + footprint.Length;
+
+            // indices
+            walli1 = baseTris.Length * 4 + i * 6;
+            walli2 = walli1 + footprint.Length * 6;
+
             // generate triangles clockwise
-            allTris[mult] = i;
-            allTris[mult + 1] = (i + 1) % footprint.Length;
-            allTris[mult + 2] = (i + footprint.Length) % (2 * footprint.Length);
-            allTris[mult + 3] = (i + footprint.Length) % (2 * footprint.Length);
-            allTris[mult + 4] = (i + 1) % footprint.Length;
-            allTris[mult + 5] = (i + footprint.Length + 1) % (2 * footprint.Length);
+            allTris[walli1] = w1;
+            allTris[walli1 + 1] = w3;
+            allTris[walli1 + 2] = w2;
+            allTris[walli1 + 3] = w2;
+            allTris[walli1 + 4] = w3;
+            allTris[walli1 + 5] = w4;
+            // generate triangles counter-clockwise
+            allTris[walli2] = w1;
+            allTris[walli2 + 1] = w2;
+            allTris[walli2 + 2] = w3;
+            allTris[walli2 + 3] = w2;
+            allTris[walli2 + 4] = w4;
+            allTris[walli2 + 5] = w3;
         }
-        */
+
 
         //Assign data to mesh
         mesh.vertices = vertices;
@@ -317,9 +375,9 @@ public class BuildingImportEditor : MonoBehaviour {
         mesh.triangles = allTris;
 
         //Recalculations
-        //mesh.RecalculateNormals();
-        //mesh.RecalculateBounds();
-        //mesh.Optimize();
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        mesh.Optimize();
 
         //Name the mesh
         mesh.name = "BuildingMesh";

@@ -10,19 +10,89 @@ namespace Reprojection.Tests
     {
 
         [Test]
-        public void FargoLatLon_ToUTM()
+        public void FargoLatLon_ToUTMUp()
         {
-            double latitude = 46.8961201;
-            double longitude = -96.8083852;
+            double latitude = 47.022678;
+            double longitude = -96.8155631226544;
+            double expectedUTMNorthing = 5210000;
+            double expectedUTMEasting = 666000;
+
+
+
             double UTMNorthing;
             double UTMEasting;
             string UTMZone;
 
             CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
 
-            //double UTMNorthingExpected = 
+            Assert.AreEqual(
+                new Vector2((int)expectedUTMNorthing, (int)expectedUTMEasting),
+                new Vector2((int)UTMNorthing, (int)UTMEasting)
+                );
+        }
+        [Test]
+        public void FargoLatLon_ToUTMMid()
+        {
+            double latitude = 46.932755;
+            double longitude = -96.81922393958703;
+            double expectedUTMNorthing = 5200000;
+            double expectedUTMEasting = 666000;
 
-            //Assert.AreEqual();
+
+
+            double UTMNorthing;
+            double UTMEasting;
+            string UTMZone;
+
+            CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
+
+            Assert.AreEqual(
+                new Vector2((int)expectedUTMNorthing, (int)expectedUTMEasting),
+                new Vector2((int)UTMNorthing, (int)UTMEasting)
+                );
+        }
+
+        [Test]
+        public void FargoLatLon_ToUTMDown()
+        {
+            double latitude = 46.842831;
+            double longitude = -96.82286717333807;
+            double expectedUTMNorthing = 5190000;
+            double expectedUTMEasting = 666000;
+
+
+
+            double UTMNorthing;
+            double UTMEasting;
+            string UTMZone;
+
+            CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
+
+            Assert.AreEqual(
+                new Vector2((int)expectedUTMNorthing, (int)expectedUTMEasting),
+                new Vector2((int)UTMNorthing, (int)UTMEasting)
+                );
+        }
+
+        [Test]
+        public void FargoLatLon_ToUTM3()
+        {
+            double latitude = 46.930178;
+            double longitude = -96.68795823923735;
+            double expectedUTMNorthing = 5200000;
+            double expectedUTMEasting = 676000;
+
+
+            double UTMNorthing;
+            double UTMEasting;
+            string UTMZone;
+
+            CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
+
+            Assert.AreEqual(
+                new Vector2((int)expectedUTMNorthing, (int)expectedUTMEasting),
+                new Vector2((int)UTMNorthing, (int)UTMEasting)
+                );
         }
     }
 }
