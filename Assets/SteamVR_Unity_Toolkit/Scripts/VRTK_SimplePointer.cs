@@ -1,39 +1,52 @@
-﻿//====================================================================================
-//
-// Purpose: Provide basic laser pointer to VR Controller
-//
-// This script must be attached to a Controller within the [CameraRig] Prefab
-//
-// The VRTK_ControllerEvents script must also be attached to the Controller
-//
-// Press the default 'Grip' button on the controller to activate the beam
-// Released the default 'Grip' button on the controller to deactivate the beam
-//
-// This script is an implementation of the VRTK_WorldPointer.
-//
-//====================================================================================
+﻿// Simple Pointer|Scripts|0040
 namespace VRTK
 {
     using UnityEngine;
-    using System.Collections;
 
+    /// <summary>
+    /// The Simple Pointer emits a coloured beam from the end of the controller to simulate a laser beam. It can be useful for pointing to objects within a scene and it can also determine the object it is pointing at and the distance the object is from the controller the beam is being emitted from.
+    /// </summary>
+    /// <remarks>
+    /// The laser beam is activated by default by pressing the `Touchpad` on the controller. The event it is listening for is the `AliasPointer` events so the pointer toggle button can be set by changing the `Pointer Toggle` button on the `VRTK_ControllerEvents` script parameters.
+    ///
+    /// The Simple Pointer script can be attached to a Controller object within the `[CameraRig]` prefab and the Controller object also requires the `VRTK_ControllerEvents` script to be attached as it uses this for listening to the controller button events for enabling and disabling the beam. It is also possible to attach the Simple Pointer script to another object (like the `[CameraRig]/Camera (head)`) to enable other objects to project the beam. The controller parameter must be entered with the desired controller to toggle the beam if this is the case.
+    /// </remarks>
+    /// <example>
+    /// `VRTK/Examples/003_Controller_SimplePointer` shows the simple pointer in action and code examples of how the events are utilised and listened to can be viewed in the script `VRTK/Examples/Resources/Scripts/VRTK_ControllerPointerEvents_ListenerExample.cs`
+    /// </example>
     public class VRTK_SimplePointer : VRTK_WorldPointer
     {
+        [Tooltip("The thickness and length of the beam can also be set on the script as well as the ability to toggle the sphere beam tip that is displayed at the end of the beam (to represent a cursor).")]
         public float pointerThickness = 0.002f;
+        [Tooltip("The distance the beam will project before stopping.")]
         public float pointerLength = 100f;
+        [Tooltip("Toggle whether the cursor is shown on the end of the pointer beam.")]
         public bool showPointerTip = true;
+        [Tooltip("A custom Game Object can be applied here to use instead of the default sphere for the pointer cursor.")]
+        public GameObject customPointerCursor;
+        [Tooltip("The layers to ignore when raycasting.")]
         public LayerMask layersToIgnore = Physics.IgnoreRaycastLayer;
 
         private GameObject pointerHolder;
         private GameObject pointer;
         private GameObject pointerTip;
         private Vector3 pointerTipScale = new Vector3(0.05f, 0.05f, 0.05f);
+        // material of customPointerCursor (if defined)
+        private Material customPointerMaterial;
 
-        // Use this for initialization
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
             InitPointer();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (pointerHolder != null)
+            {
+                Destroy(pointerHolder);
+            }
         }
 
         protected override void Update()
@@ -51,13 +64,13 @@ namespace VRTK
 
         protected override void InitPointer()
         {
-            pointerHolder = new GameObject(string.Format("[{0}]WorldPointer_SimplePointer_Holder", this.gameObject.name));
+            pointerHolder = new GameObject(string.Format("[{0}]WorldPointer_SimplePointer_Holder", gameObject.name));
             Utilities.SetPlayerObject(pointerHolder, VRTK_PlayerObject.ObjectTypes.Pointer);
-            pointerHolder.transform.parent = this.transform;
+            pointerHolder.transform.parent = transform;
             pointerHolder.transform.localPosition = Vector3.zero;
 
             pointer = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pointer.transform.name = string.Format("[{0}]WorldPointer_SimplePointer_Pointer", this.gameObject.name);
+            pointer.transform.name = string.Format("[{0}]WorldPointer_SimplePointer_Pointer", gameObject.name);
             Utilities.SetPlayerObject(pointer, VRTK_PlayerObject.ObjectTypes.Pointer);
             pointer.transform.parent = pointerHolder.transform;
 
@@ -65,13 +78,30 @@ namespace VRTK
             pointer.AddComponent<Rigidbody>().isKinematic = true;
             pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-            pointerTip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            pointerTip.transform.name = string.Format("[{0}]WorldPointer_SimplePointer_PointerTip", this.gameObject.name);
+            if (customPointerCursor == null)
+            {
+                pointerTip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                pointerTip.transform.localScale = pointerTipScale;
+            }
+            else
+            {
+                Renderer renderer = customPointerCursor.GetComponentInChildren<MeshRenderer>();
+                if (renderer)
+                {
+                    customPointerMaterial = Instantiate(renderer.sharedMaterial);
+                }
+                pointerTip = Instantiate(customPointerCursor);
+                foreach (Renderer mr in pointerTip.GetComponentsInChildren<Renderer>())
+                {
+                    mr.material = customPointerMaterial;
+                }
+            }
+
+            pointerTip.transform.name = string.Format("[{0}]WorldPointer_SimplePointer_PointerTip", gameObject.name);
             Utilities.SetPlayerObject(pointerTip, VRTK_PlayerObject.ObjectTypes.Pointer);
             pointerTip.transform.parent = pointerHolder.transform;
-            pointerTip.transform.localScale = pointerTipScale;
 
-            pointerTip.GetComponent<SphereCollider>().isTrigger = true;
+            pointerTip.GetComponent<Collider>().isTrigger = true;
             pointerTip.AddComponent<Rigidbody>().isKinematic = true;
             pointerTip.layer = LayerMask.NameToLayer("Ignore Raycast");
 
@@ -81,20 +111,18 @@ namespace VRTK
             TogglePointer(false);
         }
 
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            if (pointerHolder != null)
-            {
-                Destroy(pointerHolder);
-            }
-        }
-
         protected override void SetPointerMaterial()
         {
             base.SetPointerMaterial();
             pointer.GetComponent<Renderer>().material = pointerMaterial;
-            pointerTip.GetComponent<Renderer>().material = pointerMaterial;
+            if (customPointerMaterial != null)
+            {
+                customPointerMaterial.color = pointerMaterial.color;
+            }
+            else
+            {
+                pointerTip.GetComponent<Renderer>().material = pointerMaterial;
+            }
         }
 
         protected override void TogglePointer(bool state)
@@ -110,12 +138,6 @@ namespace VRTK
             {
                 pointer.GetComponent<Renderer>().enabled = false;
             }
-        }
-
-        protected override void DisablePointerBeam(object sender, ControllerInteractionEventArgs e)
-        {
-            base.PointerSet();
-            base.DisablePointerBeam(sender, e);
         }
 
         private void SetPointerTransform(float setLength, float setThicknes)

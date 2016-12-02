@@ -609,7 +609,7 @@ public class SteamVR_RenderModel : MonoBehaviour
 #if UNITY_EDITOR
 	Hashtable values;
 #endif
-	void Update()
+	protected void Update()
 	{
 #if UNITY_EDITOR
 		if (!Application.isPlaying)

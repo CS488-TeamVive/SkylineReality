@@ -1,39 +1,40 @@
-﻿using UnityEngine;
-using System.Collections;
-using VRTK;
-
-public class ArrowNotch : MonoBehaviour
+﻿namespace VRTK.Examples.Archery
 {
-    private GameObject arrow;
-    private VRTK_InteractableObject obj;
+    using UnityEngine;
 
-    private void Start()
+    public class ArrowNotch : MonoBehaviour
     {
-        arrow = this.transform.FindChild("Arrow").gameObject;
-        obj = this.GetComponent<VRTK_InteractableObject>();
-    }
+        private GameObject arrow;
+        private VRTK_InteractableObject obj;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        var handle = collider.GetComponentInParent<BowHandle>();
-
-        if (handle != null && obj != null && handle.aim.IsHeld() && obj.IsGrabbed())
+        private void Start()
         {
-            handle.nockSide = collider.transform;
-            arrow.transform.parent = handle.arrowNockingPoint;
-
-            CopyNotchToArrow();
-
-            collider.GetComponentInParent<BowAim>().SetArrow(arrow);
-            Destroy(this.gameObject);
+            arrow = transform.FindChild("Arrow").gameObject;
+            obj = GetComponent<VRTK_InteractableObject>();
         }
-    }
 
-    private void CopyNotchToArrow()
-    {
-        GameObject notchCopy = Instantiate(this.gameObject, this.transform.position, this.transform.rotation) as GameObject;
-        notchCopy.name = this.name;
-        arrow.GetComponent<Arrow>().SetArrowHolder(notchCopy);
-        arrow.GetComponent<Arrow>().OnNock();
+        private void OnTriggerEnter(Collider collider)
+        {
+            var handle = collider.GetComponentInParent<BowHandle>();
+
+            if (handle != null && obj != null && handle.aim.IsHeld() && obj.IsGrabbed())
+            {
+                handle.nockSide = collider.transform;
+                arrow.transform.parent = handle.arrowNockingPoint;
+
+                CopyNotchToArrow();
+
+                collider.GetComponentInParent<BowAim>().SetArrow(arrow);
+                Destroy(gameObject);
+            }
+        }
+
+        private void CopyNotchToArrow()
+        {
+            GameObject notchCopy = Instantiate(gameObject, transform.position, transform.rotation) as GameObject;
+            notchCopy.name = name;
+            arrow.GetComponent<Arrow>().SetArrowHolder(notchCopy);
+            arrow.GetComponent<Arrow>().OnNock();
+        }
     }
 }

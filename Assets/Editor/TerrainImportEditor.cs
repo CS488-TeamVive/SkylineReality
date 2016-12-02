@@ -142,6 +142,8 @@ public class TerrainSceneCreator : EditorWindow {
         coord.MetersPerPixel = config["cellsize"];
         coord.MinHeightActual = (int)minHeightActual;
         coord.HeightScale = heightScale;
+        coord.HeightmapNSLength = (int)config["nrows"];
+        coord.HeightmapEWLength = (int)config["ncols"];
 
         EditorUtility.DisplayDialog("Job Complete", "The terrain has finished importing", "Okay");
     }

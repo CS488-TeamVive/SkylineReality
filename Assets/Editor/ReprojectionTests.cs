@@ -19,8 +19,8 @@ namespace Reprojection.Tests
 
 
 
-            double UTMNorthing;
-            double UTMEasting;
+            int UTMNorthing;
+            int UTMEasting;
             string UTMZone;
 
             CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
@@ -35,13 +35,13 @@ namespace Reprojection.Tests
         {
             double latitude = 46.932755;
             double longitude = -96.81922393958703;
-            double expectedUTMNorthing = 5200000;
-            double expectedUTMEasting = 666000;
+            int expectedUTMNorthing = 5200000;
+            int expectedUTMEasting = 666000;
 
 
 
-            double UTMNorthing;
-            double UTMEasting;
+            int UTMNorthing;
+            int UTMEasting;
             string UTMZone;
 
             CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
@@ -57,13 +57,13 @@ namespace Reprojection.Tests
         {
             double latitude = 46.842831;
             double longitude = -96.82286717333807;
-            double expectedUTMNorthing = 5190000;
-            double expectedUTMEasting = 666000;
+            int expectedUTMNorthing = 5190000;
+            int expectedUTMEasting = 666000;
 
 
 
-            double UTMNorthing;
-            double UTMEasting;
+            int UTMNorthing;
+            int UTMEasting;
             string UTMZone;
 
             CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
@@ -79,12 +79,12 @@ namespace Reprojection.Tests
         {
             double latitude = 46.930178;
             double longitude = -96.68795823923735;
-            double expectedUTMNorthing = 5200000;
-            double expectedUTMEasting = 676000;
+            int expectedUTMNorthing = 5200000;
+            int expectedUTMEasting = 676000;
 
 
-            double UTMNorthing;
-            double UTMEasting;
+            int UTMNorthing;
+            int UTMEasting;
             string UTMZone;
 
             CoordinateTranslation.LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);

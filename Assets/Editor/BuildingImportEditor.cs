@@ -205,12 +205,14 @@ public class BuildingImportEditor : MonoBehaviour {
 
         //container.name = "BuildingContainer";
 
+        Material buildingMat = Resources.Load("Buildings/BuildingMat", typeof(Material)) as Material;
+
         int buildingsOOB = 0;
 
         foreach(MapFeature mf in mapFeatures)
         {
             double[] firstCoordinates = mf.GetNodeCoordinates(0);
-            double firstNorthing, firstEasting;
+            int firstNorthing, firstEasting;
             string firstZone;
 
             CoordinateTranslation.LatLongtoUTM(
@@ -218,9 +220,13 @@ public class BuildingImportEditor : MonoBehaviour {
                 firstCoordinates[1],
                 out firstNorthing, out firstEasting, out firstZone);
 
-
+            /*
             activeTerrain = null;
             activeTranslation = null;
+            */
+            activeTerrain = GameObject.FindObjectOfType<Terrain>();
+            activeTranslation = activeTerrain.GetComponent<CoordinateTranslation>();
+            
             foreach (Terrain t in terrains)
             {
                 if (t.GetComponent<CoordinateTranslation>().WithinExtent(firstNorthing, firstEasting))
@@ -241,23 +247,27 @@ public class BuildingImportEditor : MonoBehaviour {
             int c = 0;
             foreach(long l in mf.ndreferences)
             {
-                double northing, easting;
+                int northing, easting;
                 string zone;
 
                 CoordinateTranslation.LatLongtoUTM(ndLookup[l][0], ndLookup[l][1], out northing, out easting, out zone);
 
-                relativeNodes[c++] = new Vector2((float)(northing - firstNorthing), (float)(easting - firstEasting));
+                relativeNodes[c++] = new Vector2((float)(easting - firstEasting), (float)(northing - firstNorthing));
             }
             GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
             building.name = mf.name;
             building.transform.parent = activeTerrain.transform;
 
+            if (mf.height == 0)
+                mf.height = 1;
+
             Mesh mesh = CreateMesh(relativeNodes, mf.height * 3.048f);
             building.GetComponent<MeshFilter>().mesh = mesh;
+            building.GetComponent<Renderer>().material = buildingMat;
 
             Vector2 relative = activeTranslation.RelativePosition((int)firstNorthing, (int)firstEasting);
 
-            building.transform.position = new Vector3(relative.x, 0, relative.y);
+            building.transform.position = new Vector3(relative.x, activeTranslation.ElevationOffsetAtCoordinate((int)firstNorthing, (int)firstEasting), relative.y);
 
         }
 

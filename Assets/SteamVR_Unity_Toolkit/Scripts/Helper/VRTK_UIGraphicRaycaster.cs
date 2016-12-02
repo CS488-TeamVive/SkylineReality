@@ -20,7 +20,7 @@
 
         private Canvas m_Canvas;
         private Vector2 lastKnownPosition;
-        private const float UI_CONTROL_OFFSET = 0.5f;
+        private const float UI_CONTROL_OFFSET = 0.00001f;
 
         [NonSerialized]
         private List<VRGraphic> m_RaycastResults = new List<VRGraphic>();
@@ -37,11 +37,10 @@
             m_RaycastResults.Clear();
             var ray = new Ray(eventData.pointerCurrentRaycast.worldPosition, eventData.pointerCurrentRaycast.worldNormal);
             Raycast(canvas, eventCamera, ray, m_RaycastResults);
-            eventData.hovered.Clear();
-            SetNearestRaycast(eventData, resultAppendList);
+            SetNearestRaycast(ref eventData, resultAppendList);
         }
 
-        private void SetNearestRaycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
+        private void SetNearestRaycast(ref PointerEventData eventData, List<RaycastResult> resultAppendList)
         {
             RaycastResult? nearestRaycast = null;
             for (var index = 0; index < m_RaycastResults.Count; index++)
@@ -61,7 +60,6 @@
                     nearestRaycast = castResult;
                 }
                 resultAppendList.Add(castResult);
-                eventData.hovered.Add(castResult.gameObject);
             }
 
             if (nearestRaycast.HasValue)
@@ -168,7 +166,7 @@
                     return m_Canvas;
                 }
 
-                m_Canvas = this.gameObject.GetComponent<Canvas>();
+                m_Canvas = gameObject.GetComponent<Canvas>();
                 return m_Canvas;
             }
         }

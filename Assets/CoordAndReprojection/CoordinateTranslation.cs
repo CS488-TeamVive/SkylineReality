@@ -6,15 +6,19 @@ using System;
 public class CoordinateTranslation : MonoBehaviour {
 
     [SerializeField]
-    public double UTMNorthing;
+    public int UTMNorthing;
     [SerializeField]
-    public double UTMEasting;
+    public int UTMEasting;
     [SerializeField]
     public string UTMZone;
     [SerializeField]
+    public int HeightmapNSLength;
+    [SerializeField]
+    public int HeightmapEWLength;
+    [SerializeField]
     public int MinHeightActual = 0;
     [SerializeField]
-    public double HeightScale = 1;
+    public float HeightScale = 1;
     [SerializeField]
     public float MetersPerPixel = 1;
 
@@ -23,11 +27,25 @@ public class CoordinateTranslation : MonoBehaviour {
         LatLongtoUTM(latitude, longitude, out UTMNorthing, out UTMEasting, out UTMZone);
     }
 
-    public void SetCenter(double UTMNorthing, double UTMEasting, string UTMZone)
+    public void SetCenter(int UTMNorthing, int UTMEasting, string UTMZone)
     {
         this.UTMNorthing = UTMNorthing;
         this.UTMEasting = UTMEasting;
         this.UTMZone = UTMZone;
+    }
+
+    public float ElevationOffsetAtCoordinate(int UTMNorthing, int UTMEasting)
+    {
+        Terrain t = gameObject.GetComponent<Terrain>();
+        TerrainData td = t.terrainData;
+
+        //     elevation at coordinate 
+        return (td.GetHeight(UTMEasting - this.UTMEasting - HeightmapEWLength / 2,
+            UTMNorthing - this.UTMNorthing + HeightmapNSLength / 2))
+        //  divided by heightscale
+            * td.size.y;
+            ; 
+
     }
 
     /**
@@ -36,16 +54,16 @@ public class CoordinateTranslation : MonoBehaviour {
     public Vector3 RelativePosition(int UTMNorthing, int UTMEasting, int elevation)
     {
         return new Vector3(
-            (float)(UTMEasting - this.UTMEasting),
+            (float)(UTMEasting - this.UTMEasting - 0.5f * HeightmapEWLength),
             elevation - MinHeightActual,
-            (float)(UTMNorthing - this.UTMNorthing)
+            (float)(UTMNorthing - this.UTMNorthing + 0.5f * HeightmapNSLength)
             );
     }
     public Vector2 RelativePosition(int UTMNorthing, int UTMEasting)
     {
         return new Vector2(
-            (float)(UTMEasting - this.UTMEasting),
-            (float)(UTMNorthing - this.UTMNorthing)
+            (float)(UTMEasting - this.UTMEasting - 0.5f * HeightmapEWLength),
+            (float)(UTMNorthing - this.UTMNorthing + 0.5f * HeightmapNSLength)
             );
     }
     // does not consider zone
@@ -57,13 +75,13 @@ public class CoordinateTranslation : MonoBehaviour {
         int meterWidth, meterLength;
         double boundLowerNorth, boundUpperNorth, boundLefterEast, boundRighterEast;
 
-        meterWidth = td.heightmapWidth * (int)MetersPerPixel;
-        meterLength = td.heightmapHeight * (int)MetersPerPixel;
+        meterWidth = td.heightmapResolution * (int)MetersPerPixel;
+        meterLength = td.heightmapResolution * (int)MetersPerPixel;
 
-        boundLowerNorth = this.UTMNorthing - meterLength / 2;
-        boundUpperNorth = this.UTMNorthing + meterLength / 2;
-        boundLefterEast = this.UTMEasting - meterLength / 2;
-        boundRighterEast = this.UTMEasting + meterLength / 2;
+        boundLowerNorth = this.UTMNorthing - HeightmapNSLength / 2;
+        boundUpperNorth = this.UTMNorthing + HeightmapNSLength / 2;
+        boundLefterEast = this.UTMEasting - HeightmapEWLength / 2;
+        boundRighterEast = this.UTMEasting + HeightmapEWLength / 2;
 
         bool result = UTMNorthing > boundLowerNorth &&
             UTMNorthing < boundUpperNorth &&
@@ -93,8 +111,8 @@ public class CoordinateTranslation : MonoBehaviour {
     public static void LatLongtoUTM(
         double Lat,
         double Long,
-        out double UTMNorthing,
-        out double UTMEasting,
+        out int UTMNorthing,
+        out int UTMEasting,
         out string Zone)
     {
         double LongOrigin;
@@ -140,14 +158,14 @@ public class CoordinateTranslation : MonoBehaviour {
         + (15 * eccSquared * eccSquared / 256 + 45 * eccSquared * eccSquared * eccSquared / 1024) * Math.Sin(4 * LatRad)
         - (35 * eccSquared * eccSquared * eccSquared / 3072) * Math.Sin(6 * LatRad));
 
-        UTMEasting = (double)(k0 * N * (A + (1 - T + C) * A * A * A / 6
+        UTMEasting = (int)((double)(k0 * N * (A + (1 - T + C) * A * A * A / 6
         + (5 - 18 * T + T * T + 72 * C - 58 * eccPrimeSquared) * A * A * A * A * A / 120)
-        + 500000.0);
+        + 500000.0));
 
-        UTMNorthing = (double)(k0 * (M + N * Math.Tan(LatRad) * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24
-        + (61 - 58 * T + T * T + 600 * C - 330 * eccPrimeSquared) * A * A * A * A * A * A / 720))) + 1;
+        UTMNorthing = (int)((double)(k0 * (M + N * Math.Tan(LatRad) * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24
+        + (61 - 58 * T + T * T + 600 * C - 330 * eccPrimeSquared) * A * A * A * A * A * A / 720))) + 1);
         if (Lat < 0)
-            UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
+            UTMNorthing += 10000000; //10000000 meter offset for southern hemisphere
     }
 
     /* method adapted from http://forum.worldwindcentral.com/showthread.php?9863-C-code-to-convert-DD-to-UTM-here-it-is-!! */
