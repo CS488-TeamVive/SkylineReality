@@ -12,14 +12,18 @@ public class LightController : MonoBehaviour {
 
     public float TimeOfDay;
 
+    private bool isFastForward = false;
+
     void OnEnable()
     {
         TimeButton.OnClick += AdjustTime;
+        FastForwardToggle.OnClick += ToggleFastFoward;
     }
 
     void OnDisable()
     {
         TimeButton.OnClick -= AdjustTime;
+        FastForwardToggle.OnClick -= ToggleFastFoward;
     }
 
     // Use this for initialization
@@ -33,7 +37,13 @@ public class LightController : MonoBehaviour {
     private bool DayTime = true;
 	// Update is called once per frame
 	void Update () {
-        /*TimeOfDay = (TimeOfDay + (Time.deltaTime / 3600.0f) * TimeExaggeration) % 24.0f;
+
+        if (!isFastForward)
+        {
+            return;
+        }
+
+        TimeOfDay = (TimeOfDay + (Time.deltaTime / 3600.0f) * TimeExaggeration) % 24.0f;
 
         SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
 
@@ -48,7 +58,7 @@ public class LightController : MonoBehaviour {
         { // day time
             DayTime = true;
             this.GetComponent<Light>().intensity = 1.0f;
-        }*/
+        }
 	}
 
     public void UpdateTimeOfDay(int hour, int minute)
@@ -76,5 +86,10 @@ public class LightController : MonoBehaviour {
         SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
 
         this.transform.rotation = Quaternion.Euler(SunAngle, 90.0f, 0.0f);
+    }
+
+    public void ToggleFastFoward()
+    {
+        this.isFastForward = !isFastForward;
     }
 }
