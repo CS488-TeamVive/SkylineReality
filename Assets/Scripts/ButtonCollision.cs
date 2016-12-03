@@ -7,6 +7,11 @@ public class ButtonCollision : MonoBehaviour {
     public Color defaultColor, HighlightedColor;
     private bool isHighlighted = false;
 
+    void OnEnable()
+    {
+        rend.color = defaultColor;
+    }
+
     void Start ()
     {
         rend = GetComponent<UnityEngine.UI.Image>();
