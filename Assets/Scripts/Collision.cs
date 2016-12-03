@@ -8,20 +8,25 @@ public class Collision : MonoBehaviour {
     public Color defaultColor, HighlightedColor;
     private bool isHighlighted = false;
 
+    public enum TimeSetting { Hour = 0, Minute = 1 };
+    public enum EffectSetting { Increase = 1, Decrease = -1 } ;
+
+    public TimeSetting timeSetting;
+    public EffectSetting effectSetting;
+
+    public delegate void TimeButtonEvent(TimeSetting timeSetting, EffectSetting effectSetting);
+    public static event TimeButtonEvent OnClick;
+
     void OnEnable()
     {
         EventHandlerRightController.OnTriggerClick += EventHandlerRightController_OnTriggerClick;
     }
 
-    private void EventHandlerRightController_OnTriggerClick(object sender, VRTK.ControllerInteractionEventArgs e)
+    void OnDisable()
     {
-        if(isHighlighted)
-            this.gameObject.SetActive(false);
-        else
-            this.gameObject.SetActive(true);
+        EventHandlerRightController.OnTriggerClick -= EventHandlerRightController_OnTriggerClick;
     }
 
-    // Use this for initialization
     void Start ()
     {
         rend = GetComponent<UnityEngine.UI.Image>();
@@ -29,18 +34,19 @@ public class Collision : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Trigger Enter");
         rend.color = HighlightedColor;
         isHighlighted = true;
-        //rend.sharedMaterial = highlightedMat;
-
     }
 
     void OnTriggerExit(Collider col)
     {
-        Debug.Log("Trigger Exit");
         rend.color = defaultColor;
         isHighlighted = false;
-        //rend.sharedMaterial = defaultMat;
+    }
+
+    private void EventHandlerRightController_OnTriggerClick(object sender, VRTK.ControllerInteractionEventArgs e)
+    {
+        if (isHighlighted)
+            OnClick(timeSetting, effectSetting);
     }
 }

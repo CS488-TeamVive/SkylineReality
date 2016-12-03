@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LightController : MonoBehaviour {
 
@@ -13,8 +12,18 @@ public class LightController : MonoBehaviour {
 
     public float TimeOfDay;
 
-	// Use this for initialization
-	void Start () {
+    void OnEnable()
+    {
+        Collision.OnClick += AdjustTime;
+    }
+
+    void OnDisable()
+    {
+        Collision.OnClick -= AdjustTime;
+    }
+
+    // Use this for initialization
+    void Start () {
         Month = Months.January;
         TimeOfDay = 12.0f;
 	}
@@ -23,8 +32,8 @@ public class LightController : MonoBehaviour {
     private float SunAngle;
     private bool DayTime = true;
 	// Update is called once per frame
-	void FixedUpdate () {
-        TimeOfDay = (TimeOfDay + (Time.deltaTime / 3600.0f) * TimeExaggeration) % 24.0f;
+	void Update () {
+        /*TimeOfDay = (TimeOfDay + (Time.deltaTime / 3600.0f) * TimeExaggeration) % 24.0f;
 
         SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
 
@@ -39,6 +48,33 @@ public class LightController : MonoBehaviour {
         { // day time
             DayTime = true;
             this.GetComponent<Light>().intensity = 1.0f;
-        }
+        }*/
 	}
+
+    public void UpdateTimeOfDay(int hour, int minute)
+    {
+        TimeOfDay = hour + (minute / 60);
+    }
+
+    private void AdjustTime(Collision.TimeSetting timeSetting, Collision.EffectSetting effectSetting)
+    {
+        if(timeSetting == Collision.TimeSetting.Hour)
+        {
+            TimeOfDay = (TimeOfDay + (int)effectSetting) % 24.0f;
+        }
+        else
+        {
+            TimeOfDay = (TimeOfDay + ((int)effectSetting / 60.0f)) % 24.0f;
+            Debug.Log(TimeOfDay);
+        }
+
+        if(TimeOfDay < 0)
+        {
+            TimeOfDay = (24 + (int)TimeOfDay) + (TimeOfDay % 1);
+        }
+
+        SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
+
+        this.transform.rotation = Quaternion.Euler(SunAngle, 90.0f, 0.0f);
+    }
 }
