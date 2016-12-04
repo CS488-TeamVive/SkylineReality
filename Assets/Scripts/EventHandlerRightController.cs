@@ -149,7 +149,7 @@ public class EventHandlerRightController : MonoBehaviour {
 
     private void DoApplicationMenuPressed(object sender, ControllerInteractionEventArgs e)
     {
-        if (OnTriggerAxisChange != null)
+        if (OnApplicationMenuPress != null)
         {
             OnApplicationMenuPress(sender, e);
         }

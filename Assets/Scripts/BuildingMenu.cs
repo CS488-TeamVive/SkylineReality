@@ -8,6 +8,8 @@ public class BuildingMenu : MonoBehaviour {
     private int coordCount;
     private bool isBuilding = false;
 
+    public GameObject buildingPrefab;
+
     private enum acceptableMenus { Mag_Selected };
 
     void OnEnable()
@@ -51,6 +53,11 @@ public class BuildingMenu : MonoBehaviour {
             return;
         }
 
+        if (CubeCollision.globalIsStrongHighlighted)
+        {
+            return;
+        }
+
         Vector3 controllerCoords = this.getChildByName("Controller (left)").transform.position;
         coordinates[coordCount++] = controllerCoords;
 
@@ -72,9 +79,8 @@ public class BuildingMenu : MonoBehaviour {
         return null;
     }
 
-    private GameObject CreateBuilding()
+    private void CreateBuilding()
     {
-        var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         float[] minCoords = new float[3];
         float[] maxCoords = new float[3];
 
@@ -89,13 +95,17 @@ public class BuildingMenu : MonoBehaviour {
         float yScale = maxCoords[1] - minCoords[1];
         float zScale = maxCoords[2] - minCoords[2];
 
-        cube.transform.position = new Vector3(minCoords[0] + xScale/2, minCoords[1] + yScale / 2, minCoords[2] + zScale / 2);
-        cube.transform.localScale = new Vector3(xScale, yScale, zScale);
+        Vector3 position = new Vector3(minCoords[0] + xScale/2, minCoords[1] + yScale / 2, minCoords[2] + zScale / 2);
+        Vector3 localScale = new Vector3(xScale, yScale, zScale);
+
+        GameObject gameObject = Instantiate(buildingPrefab, position, Quaternion.identity) as GameObject;
+
+        gameObject.transform.FindChild("Cube").transform.localScale = localScale;
+        
+        RedoUndo.AddUndo(new GameObject[]{ null, gameObject});
 
         coordinates = new Vector3[3];
         coordCount = 0;
-
-        return cube;
     }
 
     private bool isAcceptable(LeftMenuController.MenuOption selection)

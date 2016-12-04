@@ -15,6 +15,11 @@ public class FastForwardToggle : MonoBehaviour {
     public delegate void ToggleButtonEvent();
     public static event ToggleButtonEvent OnClick;
 
+    void Star()
+    {
+        collision = (ButtonCollision)GetComponent(typeof(ButtonCollision));
+    }
+
     void OnEnable()
     {
         EventHandlerRightController.OnTriggerClick += EventHandlerRightController_OnTriggerClick;

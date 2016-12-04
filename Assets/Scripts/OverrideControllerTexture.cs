@@ -9,9 +9,9 @@ using System;
 public class OverrideControllerTexture : SteamVR_RenderModel
 {
     public List<Texture2D> skinList;
-    private MenuDisplayOption currentMenu = MenuDisplayOption.Default;
+    public static MenuDisplayOption currentMenu = MenuDisplayOption.Default;
 
-    private enum MenuDisplayOption { Default = 0, Calendar_Selected = 1, Sun_Selected = 2, Building_Selected = 3 };
+    public  enum MenuDisplayOption { Default = 0, Calendar_Selected = 1, Sun_Selected = 2, Building_Selected = 3 };
 
     protected new void Update()
     {

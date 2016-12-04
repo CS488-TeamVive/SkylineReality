@@ -10,12 +10,8 @@ public class ButtonCollision : MonoBehaviour {
 
     void OnEnable()
     {
-        rend.color = defaultColor;
-    }
-
-    void Start ()
-    {
         rend = GetComponent<Image>();
+        rend.color = defaultColor;
     }
 
     void OnTriggerEnter(Collider col)
