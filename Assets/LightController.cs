@@ -51,6 +51,24 @@ public class LightController : MonoBehaviour {
         }*/
 	}
 
+    void UpdateSun()
+    {
+        SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
+
+        this.transform.rotation = Quaternion.Euler(SunAngle, 90.0f, 0.0f);
+
+        if (DayTime && (TimeOfDay < 6.0f || TimeOfDay > 18.0f))
+        { // night time
+            DayTime = false;
+            this.GetComponent<Light>().intensity = 0.5f;
+        }
+        else if (!DayTime && (TimeOfDay >= 6.0f && TimeOfDay <= 18.0f))
+        { // day time
+            DayTime = true;
+            this.GetComponent<Light>().intensity = 1.0f;
+        }
+    }
+
     public void UpdateTimeOfDay(int hour, int minute)
     {
         TimeOfDay = hour + (minute / 60);
@@ -73,8 +91,6 @@ public class LightController : MonoBehaviour {
             TimeOfDay = (24 + (int)TimeOfDay) + (TimeOfDay % 1);
         }
 
-        SunAngle = ((TimeOfDay + 6.0f) % 12.0f) * 15.0f;
-
-        this.transform.rotation = Quaternion.Euler(SunAngle, 90.0f, 0.0f);
+        UpdateSun();
     }
 }

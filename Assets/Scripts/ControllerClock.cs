@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ControllerClock : MonoBehaviour {
 
     LightController lightController;
-    TextMesh clockTextMesh;
+    Text clockText;
 	// Use this for initialization
 	void Start () {
         lightController = GameObject.FindWithTag("DirectionalLight").GetComponent<LightController>();
-        clockTextMesh = this.GetComponentInChildren<TextMesh>();
+        clockText = transform.Find("Text").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        clockTextMesh.text = string.Format("{0,2:D2}:{1,2:D2}", (int)lightController.TimeOfDay, (int)(lightController.TimeOfDay % 1 * 60));
+	void FixedUpdate () {
+        clockText.text = string.Format("{0,2:D2}:{1,2:D2}", (int)lightController.TimeOfDay, (int)(lightController.TimeOfDay % 1 * 60));
 	}
 }

@@ -9,7 +9,7 @@ public class TimeUpdater : MonoBehaviour {
 
     void Start () {
         lightController = GameObject.FindWithTag("DirectionalLight").GetComponent<LightController>();
-        text = (Text)GetComponent(typeof(Text));
+        text = GetComponent<Text>();
 	}
 
     // Update is called once per frame
