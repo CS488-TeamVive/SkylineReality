@@ -244,10 +244,14 @@ public class BuildingImportEditor : MonoBehaviour {
                 continue;
             }
 
+            // check if first and last reference are the same; if so, REMOVE THE LAST because it will BREAK TRIANGULATION
+            if (mf.ndreferences[mf.ndreferences.Count - 1] == mf.ndreferences[0])
+                mf.ndreferences.RemoveAt(mf.ndreferences.Count - 1);
 
             Vector2[] relativeNodes = new Vector2[mf.NodeCount()];
             int c = 0;
-            foreach(long l in mf.ndreferences)
+
+            foreach (long l in mf.ndreferences)
             {
                 int northing, easting;
                 string zone;
@@ -257,8 +261,12 @@ public class BuildingImportEditor : MonoBehaviour {
                 relativeNodes[c++] = new Vector2((float)(easting - firstEasting), (float)(northing - firstNorthing));
             }
             GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            building.name = mf.name;
             building.transform.parent = activeTerrain.transform;
+
+            if (string.IsNullOrEmpty(mf.name))
+                building.name = "name unavailable";
+            else
+                building.name = mf.name;
 
             if (mf.height == 0)
                 mf.height = 1;
@@ -270,6 +278,7 @@ public class BuildingImportEditor : MonoBehaviour {
             Vector2 relative = activeTranslation.RelativePosition((int)firstNorthing, (int)firstEasting);
 
             building.transform.position = new Vector3(relative.x, activeTranslation.ElevationOffsetAtCoordinate((int)firstNorthing, (int)firstEasting), relative.y);
+            // if this line throws an exception then you need to create the 'building' tag in the project
             building.tag = "building";
         }
 
@@ -284,7 +293,65 @@ public class BuildingImportEditor : MonoBehaviour {
 
     }
 
-    public static Mesh CreateMesh(Vector2[] footprint, float height)
+    public class BuildingGenerator : EditorWindow
+    {
+        string buildingName = "name";
+        string coordinateString = "-1,0;1,0;0,1";
+
+        // Add menu named "My Window" to the Window menu
+        [MenuItem("Skyline Debug/Gen Sample Building")]
+        static void Init()
+        {
+            // Get existing open window or if none, make a new one:
+            BuildingGenerator window = (BuildingGenerator)EditorWindow.GetWindow(typeof(BuildingGenerator));
+            window.ShowUtility();
+        }
+
+        void OnGUI()
+        {
+            GUILayout.Label("Base Settings", EditorStyles.boldLabel);
+            buildingName = EditorGUILayout.TextField("Building name: ", buildingName);
+            coordinateString = EditorGUILayout.TextField("Coordinate string: ", coordinateString);
+
+            if (GUILayout.Button("Create"))
+            {
+                List<Vector2> vec = new List<Vector2>();
+                foreach(string s_vec in coordinateString.Split(';'))
+                {
+                    string[] vecpart = s_vec.Split(',');
+                    vec.Add(new Vector2(float.Parse(vecpart[0]), float.Parse(vecpart[1])));
+                }
+                GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Terrain t = GameObject.FindObjectOfType<Terrain>();
+                CoordinateTranslation ct = t.GetComponent<CoordinateTranslation>();
+                Material buildingMat = Resources.Load("Buildings/BuildingMat", typeof(Material)) as Material;
+                Mesh mesh = CreateMesh(vec.ToArray(), 3.048f, true);
+                building.GetComponent<MeshFilter>().mesh = mesh;
+                building.GetComponent<Renderer>().material = buildingMat;
+                building.transform.parent = t.transform;
+                building.transform.position = new Vector3(vec[0].x + 1000, ct.ElevationOffsetAtCoordinate((int)(ct.UTMNorthing + vec[0].y), (int)(ct.UTMEasting + vec[0].x)), vec[0].y + 1000);
+                // if this line throws an exception then you need to create the 'building' tag in the project
+                building.tag = "building";
+            }
+        }
+    }
+
+
+    public static string[] IntListToStringArr(List<int> intl)
+    {
+        string[] result = new string[intl.Count];
+        for (int i = 0; i < intl.Count; i++)
+            result[i] = intl[i].ToString();
+        return result;
+    }
+    public static string[] VecArrToStringArr(Vector2[] intl)
+    {
+        string[] result = new string[intl.Length];
+        for (int i = 0; i < intl.Length; i++)
+            result[i] = intl[i].ToString();
+        return result;
+    }
+    public static Mesh CreateMesh(Vector2[] footprint, float height, bool debug=true, string debugname="")
     {
         //Create a new mesh
         Mesh mesh = new Mesh();
@@ -307,6 +374,7 @@ public class BuildingImportEditor : MonoBehaviour {
         // baseTris.Length * (1 floor + 1 ceiling) * (1 inside + 1 outside) +
         //     footprint.Length * (2 triangles per rectangle wall) * (3 points per triangle) * (1 inside + 1 outside)
         int[] allTris = new int[baseTris.Length * 2 * 2 + footprint.Length * 2 * 3 * 2];
+
 
 
         int f1, f2, f3, c1, c2, c3;
@@ -389,7 +457,21 @@ public class BuildingImportEditor : MonoBehaviour {
             allTris[walli2 + 5] = w3;
         }
 
-
+        if (debug)
+        {
+            List<int> triList = new List<int>(allTris);
+            List<int> floor = triList.GetRange(0, baseTris.Length * 2);
+            List<int> ceiling = triList.GetRange(baseTris.Length * 2, baseTris.Length * 2);
+            List<int> wall = triList.GetRange(baseTris.Length * 2 * 2, footprint.Length * 2 * 3 * 2);
+            Debug.Log(string.Format("vert debug for {0}\nvertices ({1}): {2}\nfloor triangles: {3}\nceiling triangles: {4}\nwall triangles: {5}",
+                debugname,
+                footprint.Length * 2,
+                string.Join("; ", VecArrToStringArr(footprint)),
+                string.Join(", ", IntListToStringArr(floor)),
+                string.Join(", ", IntListToStringArr(ceiling)),
+                string.Join(", ", IntListToStringArr(wall))
+                ));
+        }
         //Assign data to mesh
         mesh.vertices = vertices;
         //mesh.uv = uvs;
