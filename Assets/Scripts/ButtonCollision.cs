@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ButtonCollision : MonoBehaviour {
@@ -14,7 +15,7 @@ public class ButtonCollision : MonoBehaviour {
 
     void Start ()
     {
-        rend = GetComponent<UnityEngine.UI.Image>();
+        rend = GetComponent<Image>();
     }
 
     void OnTriggerEnter(Collider col)

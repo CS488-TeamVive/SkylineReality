@@ -6,6 +6,8 @@ using UnityEditor;
 using System.Xml;
 using System.IO;
 
+using VoronoiNS;
+
 public class BuildingImportEditor : MonoBehaviour {
 
     private enum MapFeatureTypes { Unknown, Building };
@@ -88,7 +90,7 @@ public class BuildingImportEditor : MonoBehaviour {
                                 ndCache.Add(long.Parse(xr.GetAttribute("ref")));
                                 break;
                             case "tag":
-                                if (xr.GetAttribute("k").Equals("building") && xr.GetAttribute("v").Contains("yes"))
+                                if (xr.GetAttribute("k").Equals("building"))
                                 {
                                     currentFeature.type = MapFeatureTypes.Building;
                                 }
@@ -268,10 +270,17 @@ public class BuildingImportEditor : MonoBehaviour {
             Vector2 relative = activeTranslation.RelativePosition((int)firstNorthing, (int)firstEasting);
 
             building.transform.position = new Vector3(relative.x, activeTranslation.ElevationOffsetAtCoordinate((int)firstNorthing, (int)firstEasting), relative.y);
-
+            building.tag = "building";
         }
 
         EditorUtility.DisplayDialog("Finished importing from OSM", "Importing was completed with " + (mapFeatures.Count - buildingsOOB) + "/" + mapFeatures.Count + " in bounds", "Okay");
+    }
+
+    [MenuItem("Skyline Import/NUKE IT")]
+    public static void RemoveBuildings()
+    {
+        foreach(GameObject deleteme in GameObject.FindGameObjectsWithTag("building"))
+            DestroyImmediate(deleteme);
 
     }
 
@@ -290,7 +299,9 @@ public class BuildingImportEditor : MonoBehaviour {
 
         // get a triangulator object; it will triangulate the floors
         Triangulator tr = new Triangulator(footprint);
+
         int[] baseTris = tr.Triangulate();
+        //int[] baseTris = tr.TriangulatePolygon();
 
         // create a new array to hold floor triangles, ceiling triangles, and wall triangles
         // baseTris.Length * (1 floor + 1 ceiling) * (1 inside + 1 outside) +

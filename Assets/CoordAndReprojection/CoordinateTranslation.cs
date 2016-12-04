@@ -39,13 +39,27 @@ public class CoordinateTranslation : MonoBehaviour {
         Terrain t = gameObject.GetComponent<Terrain>();
         TerrainData td = t.terrainData;
 
+        /*
         //     elevation at coordinate 
         return (td.GetHeight(UTMEasting - this.UTMEasting - HeightmapEWLength / 2,
             UTMNorthing - this.UTMNorthing + HeightmapNSLength / 2))
         //  divided by heightscale
             * td.size.y;
             ; 
+        */
 
+        float sampleHeight = td.GetHeight(UTMEasting - this.UTMEasting - HeightmapEWLength / 2,
+            UTMNorthing - this.UTMNorthing + HeightmapNSLength / 2);
+
+        
+
+
+        //     elevation at coordinate 
+        return td.GetHeight(UTMEasting - this.UTMEasting - HeightmapEWLength / 2,
+            UTMNorthing - this.UTMNorthing + HeightmapNSLength / 2)
+        //  divided by heightscale
+        //* td.size.y;
+        ;
     }
 
     /**
@@ -88,14 +102,14 @@ public class CoordinateTranslation : MonoBehaviour {
             UTMEasting > boundLefterEast &&
             UTMEasting < boundRighterEast;
 
-        Debug.Log(string.Format("Testing {0:N}, {1:N} within {2:N}-{3:N}, {4:N}-{5:N}\n => {6}",
-            UTMNorthing,
-            UTMEasting,
-            boundLowerNorth,
-            boundUpperNorth,
-            boundLefterEast,
-            boundRighterEast,
-            result));
+        // Debug.Log(string.Format("Testing {0:N}, {1:N} within {2:N}-{3:N}, {4:N}-{5:N}\n => {6}",
+        // UTMNorthing,
+        // UTMEasting,
+        // boundLowerNorth,
+        // boundUpperNorth,
+        // boundLefterEast,
+        // boundRighterEast,
+        // result));
 
         return result;
 
