@@ -1,19 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using VRTK;
 
 public class ClockMenuController : MonoBehaviour {
 
     public Canvas clockCanvas;
-    private bool isMenuOpen = false;
+    public Canvas applicationMenu;
+    private bool isClockOpen = false;
+    private bool isAppMenuOpen = false;
 
     void OnEnable()
     {
         LeftMenuController.OnMenuSelection += EnableClockMenu;
+        EventHandlerLeftController.OnApplicationMenuPress += ToggleMenu;
     }
 
     void OnDisable()
     {
         LeftMenuController.OnMenuSelection -= EnableClockMenu;
+        EventHandlerLeftController.OnApplicationMenuPress -= ToggleMenu;
+    }
+
+    void Start()
+    {
+        //GetComponent<VRTK_ControllerEvents>().ApplicationMenuPressed += new ControllerInteractionEventHandler(ToggleMenu);
     }
 
     public void EnableClockMenu(LeftMenuController.MenuOption selection)
@@ -24,22 +34,36 @@ public class ClockMenuController : MonoBehaviour {
 
         else if (selection != LeftMenuController.MenuOption.Sun_Selected)
         {
-            if(isMenuOpen)
+            if(isClockOpen)
             {
                 clockCanvas.gameObject.SetActive(false);
-                isMenuOpen = false;
+                isClockOpen = false;
             }          
         }
 
-        else if (!isMenuOpen)
+        else if (!isClockOpen)
         {
             clockCanvas.gameObject.SetActive(true);
-            isMenuOpen = !isMenuOpen;
+            isClockOpen = !isClockOpen;
         }
         else
         {
             clockCanvas.gameObject.SetActive(false);
-            isMenuOpen = !isMenuOpen;
+            isClockOpen = !isClockOpen;
+        }
+    }
+
+    public void ToggleMenu(object sender, ControllerInteractionEventArgs e)
+    {
+        if (!isAppMenuOpen)
+        {
+            applicationMenu.gameObject.SetActive(true);
+            isAppMenuOpen = true;
+        }
+        else
+        {
+            applicationMenu.gameObject.SetActive(false);
+            isAppMenuOpen = false;
         }
     }
 }

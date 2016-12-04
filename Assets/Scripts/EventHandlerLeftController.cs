@@ -76,7 +76,6 @@ public class EventHandlerLeftController : MonoBehaviour {
 
     private void DoTriggerPressed(object sender, ControllerInteractionEventArgs e)
     {
-        //DebugLogger(e.controllerIndex, "TRIGGER", "pressed", e);
         if(OnTriggerPress != null)
         {
             OnTriggerPress(sender, e);
@@ -149,7 +148,7 @@ public class EventHandlerLeftController : MonoBehaviour {
 
     private void DoApplicationMenuPressed(object sender, ControllerInteractionEventArgs e)
     {
-        if (OnTriggerAxisChange != null)
+        if (OnApplicationMenuPress != null)
         {
             OnApplicationMenuPress(sender, e);
         }
