@@ -22,8 +22,8 @@ public class RedoUndo : MonoBehaviour {
 
     public static void AddUndo(GameObject[] objectList)
     {
-        Debug.Log("Count: " + count++);
         undoList.Push(objectList);
+        Debug.Log("Undo Count: " + undoList.Count);
     }
 
     public static bool HasUndo()
@@ -38,8 +38,6 @@ public class RedoUndo : MonoBehaviour {
 
     void FixedUpdate()
     {
-        //Debug.Log("Undo Count: " + undoList.Count);
-        //Debug.Log("Redo Count: " + redoList.Count);
     }
 
     private void UndoChange()

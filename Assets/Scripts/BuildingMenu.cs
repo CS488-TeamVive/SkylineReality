@@ -100,8 +100,17 @@ public class BuildingMenu : MonoBehaviour {
 
         GameObject gameObject = Instantiate(buildingPrefab, position, Quaternion.identity) as GameObject;
 
-        gameObject.transform.FindChild("Cube").transform.localScale = localScale;
         
+        var childCube = gameObject.transform.FindChild("Cube");
+
+        childCube.transform.localScale = localScale;
+
+        gameObject.transform.Find("X1 Sphere").transform.position = childCube.position + new Vector3( childCube.localScale.x/2 + 1, 0, 0);
+        gameObject.transform.Find("X2 Sphere").transform.position = childCube.position - new Vector3(childCube.localScale.x / 2 + 1, 0, 0);
+        gameObject.transform.Find("Y Sphere").transform.position = childCube.position + new Vector3(0, childCube.localScale.y / 2 + 1, 0);
+        gameObject.transform.Find("Z1 Sphere").transform.position = childCube.position + new Vector3(0, 0, childCube.localScale.z / 2 + 1);
+        gameObject.transform.Find("Z2 Sphere").transform.position = childCube.position - new Vector3(0, 0, childCube.localScale.z / 2 + 1);
+
         RedoUndo.AddUndo(new GameObject[]{ null, gameObject});
 
         coordinates = new Vector3[3];
